@@ -75,13 +75,11 @@
   
   function finishScan() {
   
-    // Send scanned data to Apps Script page
-    if (window.opener) {
-      window.opener.postMessage(scanned, "*");
-    }
+    // Save scanned data in localStorage
+    localStorage.setItem("qrList", JSON.stringify(scanned));
   
-    // Close scanner tab
-    window.close();
+    // Redirect back to Apps Script page
+    window.location.href = "https://script.google.com/macros/s/AKfycbwLlSL7kZyO0fABrvtRGwiMnVC7ZWTcRvmFsus7rjst/dev?page=bulk_update";
   }
   
   startScanner();
