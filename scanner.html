@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Scanner</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f6f9;
+      padding: 20px;
+    }
+
+    #reader {
+      width: 100%;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 18px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      border-radius: 6px;
+    }
+
+    .status {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Scan QR Codes</h2>
+
+<div id="reader"></div>
+
+<div class="status">
+  Scanned Count: <span id="count">0</span>
+</div>
+
+<button onclick="finish()">Finish Scanning</button>
+
+<script>
+
+let scanned = [];
+let html5QrCode;
+
+async function startScanner() {
+
+  html5QrCode = new Html5Qrcode("reader");
+
+  await html5QrCode.start(
+    { facingMode: "environment" },
+    { fps: 10, qrbox: 250 },
+    (decodedText) => {
+
+      if (!scanned.includes(decodedText)) {
+
+        scanned.push(decodedText);
+
+        document.getElementById("count").innerText = scanned.length;
+
+        document.body.style.background = "#e6ffe6";
+        setTimeout(()=> document.body.style.background="#f4f6f9",200);
+      }
+    }
+  );
+}
+
+function finish() {
+
+  localStorage.setItem("qrList", JSON.stringify(scanned));
+
+  alert("Scanned data saved. You can return to previous page.");
+
+  window.close();
+}
+
+startScanner();
+
+</script>
+
+</body>
+</html>
