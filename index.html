@@ -48,43 +48,43 @@
 
 <script>
 
-let scanned = [];
-let html5QrCode;
-
-async function startScanner() {
-
-  html5QrCode = new Html5Qrcode("reader");
-
-  await html5QrCode.start(
-    { facingMode: "environment" },
-    { fps: 10, qrbox: 250 },
-    (decodedText) => {
-
-      if (!scanned.includes(decodedText)) {
-
-        scanned.push(decodedText);
-
-        document.getElementById("count").innerText = scanned.length;
-
-        document.body.style.background = "#e6ffe6";
-        setTimeout(()=> document.body.style.background="#f4f6f9",200);
+  let scanned = [];
+  let html5QrCode;
+  
+  async function startScanner() {
+  
+    html5QrCode = new Html5Qrcode("reader");
+  
+    await html5QrCode.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: 250 },
+      (decodedText) => {
+  
+        if (!scanned.includes(decodedText)) {
+  
+          scanned.push(decodedText);
+  
+          document.getElementById("count").innerText = scanned.length;
+  
+          document.body.style.background = "#e6ffe6";
+          setTimeout(()=> document.body.style.background="#f4f6f9",200);
+        }
       }
-    }
-  );
-}
-
-function finishScan() {
-
-  // Send scanned data to Apps Script page
-  if (window.opener) {
-    window.opener.postMessage(scanned, "*");
+    );
   }
-
-  // Close scanner tab
-  window.close();
-}
-
-startScanner();
+  
+  function finishScan() {
+  
+    // Send scanned data to Apps Script page
+    if (window.opener) {
+      window.opener.postMessage(scanned, "*");
+    }
+  
+    // Close scanner tab
+    window.close();
+  }
+  
+  startScanner();
 
 </script>
 
