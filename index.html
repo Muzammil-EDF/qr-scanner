@@ -75,8 +75,12 @@ async function startScanner() {
 
 function finishScan() {
 
-  window.opener.postMessage(scannedList, "*");
+  // Send scanned data to Apps Script page
+  if (window.opener) {
+    window.opener.postMessage(scanned, "*");
+  }
 
+  // Close scanner tab
   window.close();
 }
 
