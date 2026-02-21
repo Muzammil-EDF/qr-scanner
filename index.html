@@ -73,11 +73,9 @@ async function startScanner() {
   );
 }
 
-function finish() {
+function finishScan() {
 
-  localStorage.setItem("qrList", JSON.stringify(scanned));
-
-  alert("Scanned data saved. You can return to previous page.");
+  window.opener.postMessage(scannedList, "*");
 
   window.close();
 }
