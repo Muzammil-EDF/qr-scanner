@@ -72,16 +72,15 @@
       }
     );
   }
-  
   function finishScan() {
   
-    // Save scanned data in localStorage
-    localStorage.setItem("qrList", JSON.stringify(scanned));
+    // Convert array to string
+    const dataString = encodeURIComponent(JSON.stringify(scanned));
   
-    // Redirect back to Apps Script page
-    window.location.href = "https://script.google.com/macros/s/AKfycbzD7zbj-uj8JB1FaCmLBmqszOnJEPv2oRvHX5nTa86DzS12Ngsis8gblO4dKz1rrWOMRA/exec?page=bulk_update";
+    // Redirect back to Apps Script with data in URL
+    window.location.href =
+      "https://script.google.com/macros/s/AKfycbzD7zbj-uj8JB1FaCmLBmqszOnJEPv2oRvHX5nTa86DzS12Ngsis8gblO4dKz1rrWOMRA/exec?page=bulk_update" + dataString;
   }
-  
   startScanner();
 
 </script>
